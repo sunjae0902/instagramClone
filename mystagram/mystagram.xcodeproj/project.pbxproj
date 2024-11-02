@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		28571F122CD623CC00B52903 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 28571F112CD623CC00B52903 /* FirebaseAuth */; };
+		28571F142CD623CC00B52903 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 28571F132CD623CC00B52903 /* FirebaseFirestore */; };
+		28571F162CD623CC00B52903 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 28571F152CD623CC00B52903 /* FirebaseStorage */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		28571EDF2CD207B600B52903 /* mystagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mystagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +29,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28571F122CD623CC00B52903 /* FirebaseAuth in Frameworks */,
+				28571F142CD623CC00B52903 /* FirebaseFirestore in Frameworks */,
+				28571F162CD623CC00B52903 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +74,9 @@
 			);
 			name = mystagram;
 			packageProductDependencies = (
+				28571F112CD623CC00B52903 /* FirebaseAuth */,
+				28571F132CD623CC00B52903 /* FirebaseFirestore */,
+				28571F152CD623CC00B52903 /* FirebaseStorage */,
 			);
 			productName = mystagram;
 			productReference = 28571EDF2CD207B600B52903 /* mystagram.app */;
@@ -94,6 +106,9 @@
 			);
 			mainGroup = 28571ED62CD207B600B52903;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				28571F102CD623CC00B52903 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 28571EE02CD207B600B52903 /* Products */;
 			projectDirPath = "";
@@ -252,6 +267,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"mystagram/Preview Content\"";
+				DEVELOPMENT_TEAM = 8722XU525H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -280,6 +296,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"mystagram/Preview Content\"";
+				DEVELOPMENT_TEAM = 8722XU525H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -322,6 +339,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		28571F102CD623CC00B52903 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		28571F112CD623CC00B52903 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 28571F102CD623CC00B52903 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		28571F132CD623CC00B52903 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 28571F102CD623CC00B52903 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		28571F152CD623CC00B52903 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 28571F102CD623CC00B52903 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 28571ED72CD207B600B52903 /* Project object */;
 }

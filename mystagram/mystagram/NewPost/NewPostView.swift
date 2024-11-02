@@ -9,17 +9,8 @@ import SwiftUI
 import PhotosUI
 
 struct NewPostView: View {
-    @State var caption = ""
     @Binding var tabIndex: Int
-    @State var selectedItem: PhotosPickerItem?
-    @State var photoImage: Image?
-    
-    func convertImage(item: PhotosPickerItem?) async { // 이미지 변경
-        guard let item = item else { return }
-        guard let data = try? await item.loadTransferable(type: Data.self) else { return }
-        guard let uiImage = UIImage(data: data) else { return }
-        self.photoImage = Image(uiImage: uiImage)
-    }
+    @State var viewModel = NewPostViewModel() // 바인딩
     
     var body: some View {
         VStack {
@@ -34,26 +25,30 @@ struct NewPostView: View {
                 Spacer()
             }.padding(.horizontal)
         
-            PhotosPicker(selection: $selectedItem) {
-                if let image = self.photoImage {
+            PhotosPicker(selection: $viewModel.selectedItem) {
+                if let image = viewModel.photoImage {
                     // self.photoImage != nil이면, 장착한 후.
                     image.resizable().aspectRatio(contentMode: .fill).frame(maxWidth: .infinity, maxHeight: 400)
                 } else {
                     Image(systemName: "photo.on.rectangle").resizable().aspectRatio(1, contentMode: .fit).frame(width: 200, height: 200).padding().tint(.black)
                 }
             }
-            .onChange(of: selectedItem) { // selectedItem이 변하면 실행
+            .onChange(of: viewModel.selectedItem) { // selectedItem이 변하면 실행
                 oldValue, newValue in
                 Task {
-                    await convertImage(item: newValue)
+                    await viewModel.convertImage(item: newValue)
                 }
             }
             // (하위 뷰에서)@State 변수에 $를 넣어주면, 수정이 가능하다.
             // 커스텀 뷰에서는, @Binding을 사용해서 받는다.
-            TextField("문구를 작성하거나 설명을 추가하세요...", text: $caption).font(.titleMedium).padding()
+            TextField("문구를 작성하거나 설명을 추가하세요...", text: $viewModel.caption).font(.titleMedium).padding()
             Spacer()
             Button {
-                print("공유하기")
+                Task{ // 비동기
+                    await viewModel.uploadPost()
+                    viewModel.clearData()
+                    tabIndex = 0
+                }
             } label: {
                 Text("공유").font(.titleMedium).frame(width: 363, height: 45).foregroundStyle(.white).background(.blue ).clipShape(RoundedRectangle(cornerRadius: 12)).padding(.vertical)
             }
