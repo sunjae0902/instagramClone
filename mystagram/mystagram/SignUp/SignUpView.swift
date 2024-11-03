@@ -8,10 +8,8 @@
 import SwiftUI
 
 struct SignUpView: View {
-    @Environment(\.dismiss) var dismiss
     var body: some View {
-        ZStack {
-            GradientBackgroundView()
+        SignupBackgroundView {
             VStack {
                 Image("instagramLogo2").resizable().scaledToFit().frame(width: 120)
                 Spacer()
@@ -27,29 +25,14 @@ struct SignUpView: View {
                 Text("user님, Instagram에 오신 것을 환영합니다.")
                     .font(.title).padding(.top, 20).padding(.horizontal)
                 Spacer()
-                Button {
+                BlueButtonView {
                     
                 } label: {
                     Text("완료")
-                        .font(.titleLarge)
-                        .foregroundStyle(.white).frame(width: 363, height: 42)
-                        .background(.blue)
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
                 }
                 Spacer()
             }
         }
-        .navigationBarBackButtonHidden()
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "chevron.left").tint(.black)
-                }
-            }
-        }
-
     }
 }
 

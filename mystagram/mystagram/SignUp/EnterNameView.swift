@@ -9,21 +9,13 @@ import SwiftUI
 
 
 struct EnterNameView: View {
-    @Environment(\.dismiss) var dismiss
     var body: some View {
-        ZStack {
-            GradientBackgroundView()
+        SignupBackgroundView {
             VStack {
                 Text("이름 입력").font(.title).fontWeight(.semibold).frame(maxWidth: .infinity, alignment: .leading).padding(.bottom, 10)
                 
                 TextField("성명", text: .constant(""))
-                    .textInputAutocapitalization(.never)
-                    .padding(12)
-                    .background(Color.white)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1)
-                    }
+                    .modifier(SimpleTextFieldModifier())
                 NavigationLink {
                     EnterUserNameView()
                 } label: {
@@ -36,16 +28,6 @@ struct EnterNameView: View {
                 }
                 Spacer()
             }.padding(.horizontal)
-        }
-        .navigationBarBackButtonHidden()
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "chevron.left").tint(.black)
-                }
-            }
         }
     }
 }

@@ -21,32 +21,14 @@ struct SignInView: View {
                     
                     VStack(spacing: 20) {
                         TextField("이메일 주소", text: .constant(""))
-                            .textInputAutocapitalization(.never)
-                            .padding(12)
-                            .background(Color.white)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .overlay {
-                                RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1)
-                            }
-                            .padding(.horizontal)
+                            .modifier(SimpleTextFieldModifier())
                         
                         SecureField("비밀번호", text: .constant(""))
-                            .padding(12)
-                            .background(Color.white)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .overlay {
-                                RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1)
-                            }
-                            .padding(.horizontal)
+                            .modifier(SimpleTextFieldModifier())
                         
-                        Button {
+                        BlueButtonView {
                         } label: {
                             Text("로그인")
-                                .font(.titleLarge)
-                                .foregroundColor(.white)
-                                .frame(width: 363, height: 42)
-                                .background(Color.blue)
-                                .clipShape(RoundedRectangle(cornerRadius: 20))
                         }
                         
                         Button {
