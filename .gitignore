@@ -117,3 +117,5 @@ iOSInjectionProject/
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 # End of https://www.toptal.com/developers/gitignore/api/swift,cocoapods,xcode,firebase
+mystagram/mystagram/.DS_Store
+mystagram/.DS_Store
