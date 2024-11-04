@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct SignUpView: View {
+    @Environment(SignUpViewModel.self) var signUpViewModel
+    
     var body: some View {
+        @Bindable var signUpViewModel = signUpViewModel
         SignupBackgroundView {
             VStack {
                 Image("instagramLogo2").resizable().scaledToFit().frame(width: 120)
@@ -22,11 +25,14 @@ struct SignUpView: View {
                         Circle()
                             .stroke(Color.gray, lineWidth: 2).opacity(0.5).frame(width: 185, height: 185)
                     }
-                Text("user님, Instagram에 오신 것을 환영합니다.")
+                Text("\(signUpViewModel.nickname)님, Instagram에 오신 것을 환영합니다.")
                     .font(.title).padding(.top, 20).padding(.horizontal)
                 Spacer()
                 BlueButtonView {
-                    
+                    Task {
+                        await signUpViewModel.createUser()
+                    }
+                    MainTabView()
                 } label: {
                     Text("완료")
                 }

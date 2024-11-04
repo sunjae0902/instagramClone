@@ -8,8 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var signUpViewModel = SignUpViewModel()
+    
     var body: some View {
-        SignInView()
+        if AuthManager.shared.currentUserSession != nil {
+            MainTabView()
+        } else {
+            SignInView().environment(signUpViewModel)// 공부
+        }
     }
 }
 

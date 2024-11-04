@@ -21,7 +21,14 @@ struct MainTabView: View {
             NewPostView(tabIndex: $tabIndex).tabItem {
                 Image(systemName: "plus.square")
             }.tag(2)
-            Text("Reels").tabItem {
+            VStack {
+                Text("Reels")
+                Button {
+                    AuthManager.shared.signOut()
+                } label: {
+                    Text("로그아웃")
+                }
+            }.tabItem {
                 Image(systemName: "movieclapper")
             }.tag(3)
             Text("Profile").tabItem {

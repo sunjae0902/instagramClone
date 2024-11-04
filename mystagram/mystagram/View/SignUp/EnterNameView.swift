@@ -9,12 +9,15 @@ import SwiftUI
 
 
 struct EnterNameView: View {
+    @Environment(SignUpViewModel.self) var signUpViewModel
+    
     var body: some View {
+        @Bindable var signUpViewModel = signUpViewModel
         SignupBackgroundView {
             VStack {
-                Text("이름 입력").font(.title).fontWeight(.semibold).frame(maxWidth: .infinity, alignment: .leading).padding(.bottom, 10)
+                Text("이름 입력").font(.title).fontWeight(.semibold).frame(maxWidth: .infinity, alignment: .leading).padding(.bottom, 10).padding(.horizontal)
                 
-                TextField("성명", text: .constant(""))
+                TextField("성명", text: $signUpViewModel.name)
                     .modifier(SimpleTextFieldModifier())
                 NavigationLink {
                     EnterUserNameView()
@@ -27,7 +30,7 @@ struct EnterNameView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                 }
                 Spacer()
-            }.padding(.horizontal)
+            }
         }
     }
 }
