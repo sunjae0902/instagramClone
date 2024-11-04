@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SignInView: View {
+    @State var viewModel = SignInViewModel()
+    
     var body: some View {
         NavigationStack {
             ZStack { // 자식 뷰가 부모 뷰 위로 쌓이는 구조
@@ -20,13 +22,16 @@ struct SignInView: View {
                     Spacer()
                     
                     VStack(spacing: 20) {
-                        TextField("이메일 주소", text: .constant(""))
+                        TextField("이메일 주소", text: $viewModel.email)
                             .modifier(SimpleTextFieldModifier())
                         
-                        SecureField("비밀번호", text: .constant(""))
+                        SecureField("비밀번호", text: $viewModel.password)
                             .modifier(SimpleTextFieldModifier())
                         
                         BlueButtonView {
+                            Task {
+                                await viewModel.signIn()
+                            }
                         } label: {
                             Text("로그인")
                         }
