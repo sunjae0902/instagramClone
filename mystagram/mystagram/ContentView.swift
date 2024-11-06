@@ -11,7 +11,7 @@ struct ContentView: View {
     @State var signUpViewModel = SignUpViewModel()
     
     var body: some View {
-        if AuthManager.shared.currentAuthUser != nil {
+        if AuthManager.shared.currentUser != nil {
             MainTabView()
         } else {
             SignInView().environment(signUpViewModel)// 공부

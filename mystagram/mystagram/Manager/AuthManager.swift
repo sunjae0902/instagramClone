@@ -68,6 +68,7 @@ class AuthManager {
         do {
             try Auth.auth().signOut()
             currentAuthUser = nil
+            currentUser = nil
         } catch {
             print("failed to sign out with error \(error.localizedDescription)")
         }

@@ -12,6 +12,8 @@ extension Color {
     static let gradientRed = Color(hex: "#FDF2F6")
     static let gradientBlue = Color(hex: "#EDF6FF")
     static let gradientGreen = Color(hex: "#EEFBF2")
+    static let gray200 = Color(.gray.opacity(0.2))
+    static let gray500 = Color(.gray.opacity(0.5))
 }
 
 extension Color {

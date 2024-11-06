@@ -8,10 +8,11 @@
 import Foundation
 
 // struct Post: Encodable, Decodable {
-struct Post: Codable {
+struct Post: Codable, Identifiable { // 인코딩/디코딩 가능, 반복문에서 식별 가능
     let id: String
+    let userId: String
     let caption: String
-    let like: Int
+    var like: Int
     let imageUrl: String
     let date: Date
 }

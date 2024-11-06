@@ -31,7 +31,7 @@ struct MainTabView: View {
             }.tabItem {
                 Image(systemName: "movieclapper")
             }.tag(3)
-            Text("Profile").tabItem {
+            ProfileView().tabItem {
                 Image(systemName: "person.circle")
             }.tag(4)
         }.tint(.black) // 하위 뷰 tint 모두 블랙으로.
