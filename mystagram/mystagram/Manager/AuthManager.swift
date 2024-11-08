@@ -55,6 +55,16 @@ class AuthManager {
         }
     }
     
+    func loadUserData(userId: String) async -> User? {
+        do {
+            return try await Firestore.firestore().collection("users").document(userId).getDocument(as: User.self) // User 타입으로 가져와라
+        } catch {
+            print("failed to load user data with error \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
+    
     func signIn(email: String, password: String) async {
         do {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)

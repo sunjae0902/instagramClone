@@ -14,6 +14,7 @@ extension Color {
     static let gradientGreen = Color(hex: "#EEFBF2")
     static let gray200 = Color(.gray.opacity(0.2))
     static let gray500 = Color(.gray.opacity(0.5))
+    static let instagramPurple = Color(hex: "#bf0bb4")
 }
 
 extension Color {

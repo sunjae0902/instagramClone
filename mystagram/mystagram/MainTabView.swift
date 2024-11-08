@@ -5,14 +5,14 @@
 //  Created by sunjae on 10/30/24.
 //
 
-import SwiftUI
+import SwiftUI 
 
 struct MainTabView: View {
     @State var tabIndex = 0
     var body: some View {
         // tabIndex -> tag 속성에 의해 페이지 업데이트됨
         TabView(selection: $tabIndex) {
-            Text("Feed").tabItem {
+            FeedView().tabItem {
                 Image(systemName: "house")
             }.tag(0)
             Text("Search").tabItem {
