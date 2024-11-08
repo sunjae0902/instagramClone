@@ -34,32 +34,14 @@ class ProfileViewModel {
     }
     
     // onChange 콜백
+    
     func convertImage(item: PhotosPickerItem?) async { // 이미지 변경
-        guard let item = item else { return }
-        guard let data = try? await item.loadTransferable(type: Data.self) else { return }
-        guard let uiImage = UIImage(data: data) else { return } // uiimage 객체 생성
-        self.profileImage = Image(uiImage: uiImage) // 뷰에 보여줄 이미지
-        self.uiImage = uiImage // 파이어베이스에 업로드하기 위해 UIkit의 uiimage에 저장
-    }
+         guard let imageSelection = await ImageManager.convertImage(item: item) else { return }
+         self.profileImage = imageSelection.image
+         self.uiImage = imageSelection.uiImage
+     }
     
-    func uploadImage(uiImage: UIImage) async -> String? {
-        guard let imageData = uiImage.jpegData(compressionQuality: 0.5) else { return nil }
-        let fileName = UUID().uuidString // uuid 생성 -> 파일 이름이 됨
-        print("fileName: \(fileName)")
-        let reference = Storage.storage().reference(withPath: "/profile/\(fileName)")
-        
-        do {
-            let metaData = try await reference.putDataAsync(imageData)
-            print("metaData: \(metaData)")
-            let url = try await reference.downloadURL()
-            return url.absoluteString
-        } catch {
-            print("failed to upload image with error \(error.localizedDescription)")
-            return nil
-        }
-    }
-    
-    func updateUser() async {
+   func updateUser() async {
         do {
             // 데이터 일관성 (서버에 업로드 성공 시에만 로컬 업데이트 -> 업로드만 성공하면 즉각적으로 ui 업데이트 가능)
             try await updateUserServer()
@@ -95,7 +77,7 @@ class ProfileViewModel {
         }
         
         if let uiImage = self.uiImage {
-            let imageUrl = await uploadImage(uiImage: uiImage)
+            guard let imageUrl = await ImageManager.uploadImage(uiImage: uiImage, path: ImagePath.profile) else { return }
             editedData["profileImageUrl"] = imageUrl
         }
         

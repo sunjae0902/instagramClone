@@ -26,8 +26,8 @@ struct NewPostView: View {
             }.padding(.horizontal)
         
             PhotosPicker(selection: $viewModel.selectedItem) {
-                if let image = viewModel.photoImage {
-                    // self.photoImage != nil이면, 장착한 후.
+                if let image = viewModel.postImage {
+                    // self.postImage != nil이면, 장착한 후.
                     image.resizable().aspectRatio(contentMode: .fill).frame(maxWidth: .infinity, maxHeight: 400)
                 } else {
                     Image(systemName: "photo.on.rectangle").resizable().aspectRatio(1, contentMode: .fit).frame(width: 200, height: 200).padding().tint(.black)
