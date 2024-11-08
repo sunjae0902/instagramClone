@@ -46,7 +46,7 @@ struct ProfileView: View {
                             .foregroundStyle(Color.gray500)
                     }
                     VStack {
-                        Text("1")
+                        Text("\(viewModel.posts.count)")
                             .font(.titleLarge)
                         Text("게시물")
                     }.frame(maxWidth: .infinity)
