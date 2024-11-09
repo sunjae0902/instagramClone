@@ -10,11 +10,12 @@ import Kingfisher
 
 struct ProfileView: View {
     @State var viewModel = ProfileViewModel()
+    @Environment(\.dismiss) var dismiss
     
     let columns: [GridItem] = [ // flexiable, fixed, adaptive
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible())
+        GridItem(.flexible(), spacing: 2),
+        GridItem(.flexible(), spacing: 2),
+        GridItem(.flexible(), spacing: 2)
     ]
     var body: some View {
         NavigationStack {
@@ -70,18 +71,34 @@ struct ProfileView: View {
                     .font(.titleSmall)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)
-                NavigationLink {
-                    ProfileEditingView(viewModel: viewModel)
-                } label: {
-                    Text("프로필 편집")
-                        .bold()
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 35)
-                        .foregroundStyle(.black)
-                        .background(Color.gray200)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .padding(.horizontal, 10)
-                        .padding(.top, 10)
+                if viewModel.user?.isCurrentUser == true {
+                    NavigationLink {
+                        ProfileEditingView(viewModel: viewModel)
+                    } label: {
+                        Text("프로필 편집")
+                            .bold()
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 35)
+                            .foregroundStyle(.black)
+                            .background(Color.gray200)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .padding(.horizontal, 10)
+                            .padding(.top, 10)
+                    }
+                } else {
+                    Button {
+                        print("follow")
+                    } label: {
+                        Text("팔로우")
+                            .bold()
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 35)
+                            .foregroundStyle(.white)
+                            .background(.blue)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .padding(.horizontal, 10)
+                            .padding(.top, 10)
+                    }
                 }
             }
             Divider()
@@ -99,6 +116,17 @@ struct ProfileView: View {
             }
             //.onAppear() // 뷰가 떳을 때 실행, 동기 실행
             Spacer()
+        }
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss() // 동작 완료 후 뒤로가도록
+                } label: {
+                    Image(systemName: "arrow.backward")
+                        .tint(.black)
+                }
+            }
         }
     }
 }

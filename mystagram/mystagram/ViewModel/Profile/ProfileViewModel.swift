@@ -33,8 +33,14 @@ class ProfileViewModel {
         self.bio = tempUser?.bio ?? ""
     }
     
-    // onChange 콜백
+    init(user: User) {
+        self.user = user
+        self.name = user.name
+        self.nickname = user.nickname
+        self.bio = user.bio ?? ""
+    }
     
+    // onChange 콜백
     func convertImage(item: PhotosPickerItem?) async { // 이미지 변경
          guard let imageSelection = await ImageManager.convertImage(item: item) else { return }
          self.profileImage = imageSelection.image

@@ -16,56 +16,62 @@ struct FeedCellView: View {
     }
     
     var body: some View {
-        VStack {
-            HStack {
-                KFImage(URL(string: viewModel.post.user?.profileImageUrl ?? ""))
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 35, height: 35)
-                    .clipShape(Circle())
-                    .overlay{
-                        Circle()
-                            .stroke(Color.instagramPurple, lineWidth: 2)
+            VStack {
+                NavigationLink {
+                    if let user = viewModel.post.user {
+                        ProfileView(viewModel: ProfileViewModel(user: user))
                     }
-                    .padding(.trailing, 6)
-                Text("nickname")
-                    .font(.titleLarge)
-                Spacer()
-                Image(systemName: "ellipsis")
-            }
-            .padding(.horizontal)
-            KFImage(URL(string: viewModel.post.imageUrl))
-                .resizable()
-                .frame(maxWidth: .infinity)
-                .scaledToFit()
-            HStack {
-                FeedDetailTileView(text: "\(viewModel.post.like)", leadingIcon: Image(systemName: "heart")).padding(.trailing, 5)
-                FeedDetailTileView(text: "12", leadingIcon: Image(systemName: "bubble.right"))
-                Spacer()
-                Image(systemName: "bookmark")
-            }
-            .imageScale(.large)
-            .padding(.horizontal)
-            .padding(.bottom, 1)
-            Text("\(viewModel.post.user?.nickname ?? "")" + " " + viewModel.post.caption)
-                .font(.bodyLarge)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                } label: {
+                    HStack {
+                        KFImage(URL(string: viewModel.post.user?.profileImageUrl ?? ""))
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 35, height: 35)
+                            .clipShape(Circle())
+                            .overlay{
+                                Circle()
+                                    .stroke(Color.instagramPurple, lineWidth: 2)
+                            }
+                            .padding(.trailing, 6)
+                        Text("\(viewModel.post.user?.nickname ?? "")")
+                            .font(.titleLarge)
+                        Spacer()
+                        Image(systemName: "ellipsis")
+                    }
+                    .padding(.horizontal)
+                }
+                KFImage(URL(string: viewModel.post.imageUrl))
+                    .resizable()
+                    .frame(maxWidth: .infinity)
+                    .scaledToFit()
+                HStack {
+                    FeedDetailTileView(text: "\(viewModel.post.like)", leadingIcon: Image(systemName: "heart")).padding(.trailing, 5)
+                    FeedDetailTileView(text: "12", leadingIcon: Image(systemName: "bubble.right"))
+                    Spacer()
+                    Image(systemName: "bookmark")
+                }
+                .imageScale(.large)
                 .padding(.horizontal)
                 .padding(.bottom, 1)
-            Text("댓글 25개 더보기")
-                .foregroundStyle(.gray)
-                .font(.bodySmall)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal)
-                .padding(.bottom, 1)
-            Text(viewModel.post.date.relativeTimeString())
-                .foregroundStyle(.gray)
-                .font(.bodySmall)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal)
+                Text("\(viewModel.post.user?.nickname ?? "")" + " " + viewModel.post.caption)
+                    .font(.bodyLarge)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+                    .padding(.bottom, 1)
+                Text("댓글 25개 더보기")
+                    .foregroundStyle(.gray)
+                    .font(.bodySmall)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+                    .padding(.bottom, 1)
+                Text(viewModel.post.date.relativeTimeString())
+                    .foregroundStyle(.gray)
+                    .font(.bodySmall)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+            }
+            .padding(.bottom)
         }
-        .padding(.bottom)
-    }
 }
 
 #Preview {
