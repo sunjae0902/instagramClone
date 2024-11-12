@@ -16,12 +16,12 @@ struct FeedCellView: View {
     }
     
     var body: some View {
-            VStack {
-                NavigationLink {
-                    if let user = viewModel.post.user {
-                        ProfileView(viewModel: ProfileViewModel(user: user))
-                    }
-                } label: {
+        VStack {
+            NavigationLink {
+                if let user = viewModel.post.user {
+                    ProfileView(viewModel: ProfileViewModel(user: user))
+                }
+            } label: {
                     HStack {
                         KFImage(URL(string: viewModel.post.user?.profileImageUrl ?? ""))
                             .resizable()
@@ -39,39 +39,40 @@ struct FeedCellView: View {
                         Image(systemName: "ellipsis")
                     }
                     .padding(.horizontal)
+                    .padding(.bottom, 3)
                 }
-                KFImage(URL(string: viewModel.post.imageUrl))
-                    .resizable()
-                    .frame(maxWidth: .infinity)
-                    .scaledToFit()
-                HStack {
-                    FeedDetailTileView(text: "\(viewModel.post.like)", leadingIcon: Image(systemName: "heart")).padding(.trailing, 5)
-                    FeedDetailTileView(text: "12", leadingIcon: Image(systemName: "bubble.right"))
-                    Spacer()
-                    Image(systemName: "bookmark")
-                }
-                .imageScale(.large)
+            KFImage(URL(string: viewModel.post.imageUrl))
+                .resizable()
+                .frame(maxWidth: .infinity)
+                .scaledToFit()
+            HStack {
+                FeedDetailTileView(text: "\(viewModel.post.like)", leadingIcon: Image(systemName: "heart")).padding(.trailing, 5)
+                FeedDetailTileView(text: "12", leadingIcon: Image(systemName: "bubble.right"))
+                Spacer()
+                Image(systemName: "bookmark")
+            }
+            .imageScale(.large)
+            .padding(.horizontal)
+            .padding(.bottom, 1)
+            Text("\(viewModel.post.user?.nickname ?? "")" + " " + viewModel.post.caption)
+                .font(.bodyLarge)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
                 .padding(.bottom, 1)
-                Text("\(viewModel.post.user?.nickname ?? "")" + " " + viewModel.post.caption)
-                    .font(.bodyLarge)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
-                    .padding(.bottom, 1)
-                Text("댓글 25개 더보기")
-                    .foregroundStyle(.gray)
-                    .font(.bodySmall)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
-                    .padding(.bottom, 1)
-                Text(viewModel.post.date.relativeTimeString())
-                    .foregroundStyle(.gray)
-                    .font(.bodySmall)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
-            }
-            .padding(.bottom)
+            Text("댓글 25개 더보기")
+                .foregroundStyle(.gray)
+                .font(.bodySmall)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal)
+                .padding(.bottom, 1)
+            Text(viewModel.post.date.relativeTimeString())
+                .foregroundStyle(.gray)
+                .font(.bodySmall)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal)
         }
+        .padding(.bottom)
+    }
 }
 
 #Preview {

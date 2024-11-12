@@ -84,3 +84,69 @@ class AuthManager {
         }
     }
 }
+
+extension AuthManager {
+    func follow(userId: String?) async {
+        guard let currentUserId = currentUser?.id else { return }
+        guard let userId else { return }
+        
+        do {
+            // async let -> 두 로직이 순서에 상관없이 동시에 실행되도록.
+            async let _ = try await Firestore.firestore()
+                .collection("following")
+                .document(currentUserId)
+                .collection("user-following") // 하위 컬렉션이 만들어진 구조, 팔로잉
+                .document(userId)
+                .setData([:])
+            
+            async let _ = try await Firestore.firestore()
+                .collection("follower")
+                .document(userId)
+                .collection("user-follower") // 상대방의 팔로워에 추가
+                .document(currentUserId)
+                .setData([:]) // 빈 데이터(Id만 저장)
+        } catch {
+            print("failed to save follow data with error \(error.localizedDescription)")
+        }
+    }
+    
+    func unfollow(userId: String?) async {
+        guard let currentUserId = currentUser?.id else { return }
+        guard let userId else { return }
+        do {
+            // async let -> 두 로직이 순서에 상관없이 동시에 실행되도록.
+            async let _ = try await Firestore.firestore()
+                .collection("following")
+                .document(currentUserId)
+                .collection("user-following") // 하위 컬렉션이 만들어진 구조, 팔로잉
+                .document(userId)
+                .delete()
+            
+            async let _ = try await Firestore.firestore()
+                .collection("follower")
+                .document(userId)
+                .collection("user-follower") // 상대방의 팔로워에 추가
+                .document(currentUserId)
+                .delete()
+        } catch {
+            print("failed to save unfollow data with error \(error.localizedDescription)")
+        }
+    }
+    
+    func checkFollow(userId: String?) async -> Bool {
+        guard let currentUserId = currentUser?.id else { return false }
+        guard let userId else { return false }
+        do {
+            let isFollowing = try await Firestore.firestore()
+                .collection("following")
+                .document(currentUserId)
+                .collection("user-following")
+                .document(userId)
+                .getDocument()
+                .exists
+            return isFollowing
+        } catch {
+            return false
+        }
+    }
+}

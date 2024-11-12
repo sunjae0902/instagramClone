@@ -18,6 +18,7 @@ class ProfileViewModel {
     var name: String
     var nickname: String
     var bio: String
+    
     var selectedItem: PhotosPickerItem?
     var profileImage: Image?
     var uiImage: UIImage? // uikit의 이미지
@@ -27,7 +28,6 @@ class ProfileViewModel {
     init() {
         let tempUser = AuthManager.shared.currentUser
         self.user = tempUser
-        print("Current UserId: \(tempUser?.id)")
         self.name = tempUser?.name ?? ""
         self.nickname = tempUser?.nickname ?? ""
         self.bio = tempUser?.bio ?? ""
@@ -38,16 +38,18 @@ class ProfileViewModel {
         self.name = user.name
         self.nickname = user.nickname
         self.bio = user.bio ?? ""
+        
+        checkFollow()
     }
     
     // onChange 콜백
     func convertImage(item: PhotosPickerItem?) async { // 이미지 변경
-         guard let imageSelection = await ImageManager.convertImage(item: item) else { return }
-         self.profileImage = imageSelection.image
-         self.uiImage = imageSelection.uiImage
-     }
+        guard let imageSelection = await ImageManager.convertImage(item: item) else { return }
+        self.profileImage = imageSelection.image
+        self.uiImage = imageSelection.uiImage
+    }
     
-   func updateUser() async {
+    func updateUser() async {
         do {
             // 데이터 일관성 (서버에 업로드 성공 시에만 로컬 업데이트 -> 업로드만 성공하면 즉각적으로 ui 업데이트 가능)
             try await updateUserServer()
@@ -76,7 +78,7 @@ class ProfileViewModel {
         }
         if !nickname.isEmpty, nickname != user?.nickname {
             editedData["nickname"] = nickname
-         
+            
         }
         if !bio.isEmpty, bio != user?.bio {
             editedData["bio"] = bio
@@ -106,6 +108,30 @@ class ProfileViewModel {
         } catch {
             print("failed to load user posts with error \(error.localizedDescription)")
         }
-       
+        
     }
 }
+
+
+    extension ProfileViewModel {
+        func follow() {
+            Task {
+                await AuthManager.shared.follow(userId: user?.id)
+                user?.isFollowing = true
+            }
+        }
+        
+        func unfollow() {
+            Task {
+                await AuthManager.shared.unfollow(userId: user?.id)
+                user?.isFollowing = false
+            }
+        }
+        
+        func checkFollow() {
+            let userId = user?.id
+            Task {
+                self.user?.isFollowing = await AuthManager.shared.checkFollow(userId: userId)
+            }
+        }
+    }

@@ -26,6 +26,7 @@ struct FeedView: View {
                             .imageScale(.large)
                     }
                     .padding(.horizontal)
+                    
                     LazyVStack { // 한 번에 모두 로딩 x
                         ForEach(viewModel.posts) { post in
                             FeedCellView(post: post)
