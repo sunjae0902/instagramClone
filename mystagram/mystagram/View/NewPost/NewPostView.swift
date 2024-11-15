@@ -17,6 +17,7 @@ struct NewPostView: View {
             HStack {
                 Button {
                     tabIndex = 0
+                    viewModel.clearData()
                 } label: {
                     Image(systemName: "chevron.left").tint(Color.black)
                 }
