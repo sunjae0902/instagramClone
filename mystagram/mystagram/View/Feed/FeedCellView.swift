@@ -100,9 +100,15 @@ struct FeedCellView: View {
                 .padding(.horizontal)
         }
         .padding(.bottom)
+        .alert("오류", isPresented: $viewModel.isError) {
+            Button("확인", role: .cancel) {}
+        } message: {
+            Text("동작을 완료하지 못했어요.")
+        }
     }
 }
 
 #Preview {
     FeedCellView(post: Post(id: "ididid", userId: "userId", caption: "lalala", like: 1, imageUrl: "", date: Date()))
 }
+
