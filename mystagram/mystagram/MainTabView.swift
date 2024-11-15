@@ -15,7 +15,7 @@ struct MainTabView: View {
             FeedView().tabItem {
                 Image(systemName: "house")
             }.tag(0)
-            Text("Search").tabItem {
+            SearchView().tabItem {
                 Image(systemName: "magnifyingglass")
             }.tag(1)
             NewPostView(tabIndex: $tabIndex).tabItem {

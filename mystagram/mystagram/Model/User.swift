@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseAuth
 
-struct User: Codable {
+struct User: Codable, Identifiable {
     let id: String
     let email: String
     var name: String // 추후에 변경할 수 있는 것은 var로

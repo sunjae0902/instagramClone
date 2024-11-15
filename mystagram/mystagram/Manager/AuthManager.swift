@@ -64,6 +64,19 @@ class AuthManager {
         }
     }
     
+    func loadAllUsersData() async -> [User]? {
+        do {
+            let documents = try await Firestore.firestore().collection("users").getDocuments().documents
+            let users = try documents.compactMap{document in return try document.data(as: User.self)}
+            // documents.compactMap { e in return e.data }, nil 없이, 옵셔널 벗겨서 리턴
+            return users
+        } catch {
+            print("failed to load all user data with error \(error.localizedDescription)")
+            return nil
+        }
+        
+    }
+    
     
     func signIn(email: String, password: String) async {
         do {
