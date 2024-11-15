@@ -7,14 +7,25 @@
 
 import SwiftUI
 
-struct FeedDetailTileView: View {
+struct FeedDetailTileView<Content: View>: View {
     let text: String
-    let leadingIcon: Image
+    let leadingIcon: Content
+    let action: () -> Void // closure
+    
+    init(text: String, @ViewBuilder leadingIcon: () -> Content, action: @escaping () -> Void) {
+        self.text = text
+        self.leadingIcon = leadingIcon()
+        self.action = action
+    }
     
     var body: some View {
         HStack {
-            leadingIcon
-                .padding(.trailing, -5)
+            Button{
+                action()
+            } label: {
+                leadingIcon
+                    .padding(.trailing, -5)
+            }
             Text(text)
                 .font(.titleMedium)
         }

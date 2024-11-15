@@ -22,32 +22,45 @@ struct FeedCellView: View {
                     ProfileView(viewModel: ProfileViewModel(user: user))
                 }
             } label: {
-                    HStack {
-                        KFImage(URL(string: viewModel.post.user?.profileImageUrl ?? ""))
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 35, height: 35)
-                            .clipShape(Circle())
-                            .overlay{
-                                Circle()
-                                    .stroke(Color.instagramPurple, lineWidth: 2)
-                            }
-                            .padding(.trailing, 6)
-                        Text("\(viewModel.post.user?.nickname ?? "")")
-                            .font(.titleLarge)
-                        Spacer()
-                        Image(systemName: "ellipsis")
-                    }
-                    .padding(.horizontal)
-                    .padding(.bottom, 3)
+                HStack {
+                    KFImage(URL(string: viewModel.post.user?.profileImageUrl ?? ""))
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 35, height: 35)
+                        .clipShape(Circle())
+                        .overlay{
+                            Circle()
+                                .stroke(Color.instagramPurple, lineWidth: 2)
+                        }
+                        .padding(.trailing, 6)
+                    Text("\(viewModel.post.user?.nickname ?? "")")
+                        .font(.titleLarge)
+                    Spacer()
+                    Image(systemName: "ellipsis")
                 }
+                .padding(.horizontal)
+                .padding(.bottom, 3)
+            }
             KFImage(URL(string: viewModel.post.imageUrl))
                 .resizable()
                 .frame(maxWidth: .infinity)
                 .scaledToFit()
             HStack {
-                FeedDetailTileView(text: "\(viewModel.post.like)", leadingIcon: Image(systemName: "heart")).padding(.trailing, 5)
-                FeedDetailTileView(text: "12", leadingIcon: Image(systemName: "bubble.right"))
+                let isLike = viewModel.post.isLike ?? false
+                
+                FeedDetailTileView(text: "\(viewModel.post.like)",
+                                   leadingIcon: {Image(systemName:  isLike ? "heart.fill" : "heart").foregroundStyle(isLike ? .red : .primary)},
+                                   action: {
+                    Task{
+                        isLike == true ? await viewModel.unlike() : await viewModel.like()
+                    }
+                }).padding(.trailing, 5)
+                // 수정 
+                FeedDetailTileView(text: "12",
+                                   leadingIcon: {Image(systemName: "bubble.right")},
+                                   action: {
+                    
+                })
                 Spacer()
                 Image(systemName: "bookmark")
             }

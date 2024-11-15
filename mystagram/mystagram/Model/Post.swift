@@ -13,6 +13,7 @@ struct Post: Codable, Identifiable { // 인코딩/디코딩 가능, 반복문에
     let userId: String
     let caption: String
     var like: Int
+    var isLike: Bool?
     let imageUrl: String
     let date: Date
     
