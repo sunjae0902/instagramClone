@@ -95,19 +95,9 @@ class ProfileViewModel {
     }
     
     func loadUserPosts() async {
-        do{
-            let documents = try await Firestore.firestore().collection("posts").order(by: "date", descending: true).whereField("userId", isEqualTo: user?.id ?? "").getDocuments().documents
-            var posts: [Post] = []
-            for document in documents {
-                let post = try document.data(as: Post.self)
-                posts.append(post)
-            }
-            // 모든 데이터가 추가 되었을 때, 한 번에 저장 후 표시하기위함
-            self.posts = posts
-            
-        } catch {
-            print("failed to load user posts with error \(error.localizedDescription)")
-        }
+        guard let userId = user?.id else { return }
+        guard let posts = await PostManager.loadUserPosts(userId: userId) else { return }
+        self.posts = posts
         
     }
 }
@@ -129,7 +119,7 @@ class ProfileViewModel {
         }
         
         func checkFollow() {
-            let userId = user?.id
+            let userId = user?.id // 동시 접근으로 인한 오류 해결: 값을 복사해서 할당
             Task {
                 self.user?.isFollowing = await AuthManager.shared.checkFollow(userId: userId)
             }
