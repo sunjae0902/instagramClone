@@ -23,16 +23,31 @@ struct FeedCellView: View {
                 }
             } label: {
                 HStack {
-                    KFImage(URL(string: viewModel.post.user?.profileImageUrl ?? ""))
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 35, height: 35)
-                        .clipShape(Circle())
-                        .overlay{
-                            Circle()
-                                .stroke(Color.instagramPurple, lineWidth: 2)
-                        }
-                        .padding(.trailing, 6)
+                    if let imageUrl = viewModel.post.user?.profileImageUrl {
+                        KFImage(URL(string: imageUrl))
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 35, height: 35)
+                            .clipShape(Circle())
+                            .overlay{
+                                Circle()
+                                    .stroke(Color.instagramPurple, lineWidth: 2)
+                            }
+                        
+                        .padding(.trailing, 6)}
+                    else {
+                        Image(systemName: "person.circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 35, height: 35)
+                            .clipShape(Circle())
+                            .overlay{
+                                Circle()
+                                    .stroke(Color.instagramPurple, lineWidth: 2)
+                            }
+                            .foregroundStyle(Color.gray500)
+                    }
+                    
                     Text("\(viewModel.post.user?.nickname ?? "")")
                         .font(.titleLarge)
                     Spacer()
