@@ -18,9 +18,13 @@ class NewPostViewModel {
     var postImage: Image?
     var uiImage: UIImage? // uikit의 이미지
     
+    var isLoading: Bool = false // 로딩 상태 추가
+    
     func uploadPost() async {
         // guard let uiImage = self.uiImage else { return } 과 동일
         guard let uiImage else { return } // 옵셔널 바인딩
+        
+        isLoading = true
         guard let imageUrl = await ImageManager.uploadImage(uiImage: uiImage, path: ImagePath.post) else { return }
         guard let userId = AuthManager.shared.currentAuthUser?.uid else { return }
         let postReference = Firestore.firestore().collection("posts").document() // posts 라는 collection에 한 document 단위로 저장
@@ -31,7 +35,7 @@ class NewPostViewModel {
         } catch {
             print("failed to upload post with error \(error.localizedDescription)")
         }
-    
+        isLoading = false
     }
    
     func convertImage(item: PhotosPickerItem?) async { // 이미지 변경

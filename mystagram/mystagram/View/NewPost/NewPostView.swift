@@ -53,6 +53,10 @@ struct NewPostView: View {
             } label: {
                 Text("공유").font(.titleMedium).frame(width: 363, height: 45).foregroundStyle(.white).background(.blue ).clipShape(RoundedRectangle(cornerRadius: 12)).padding(.vertical)
             }
+            // 업로드 중 표시
+            if viewModel.isLoading {
+                CustomProgressView(text: "업로드 중...")
+            }
         }
     }
 }
