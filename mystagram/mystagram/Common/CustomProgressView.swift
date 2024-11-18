@@ -12,7 +12,7 @@ struct CustomProgressView: View {
     
     var body: some View {
         ProgressView(text)
-            .font(.titleMedium)
+            .font(.titleSmall)
             .progressViewStyle(CircularProgressViewStyle(tint: .white))
             .foregroundColor(.white)
             .padding()

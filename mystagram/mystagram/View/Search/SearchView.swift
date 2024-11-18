@@ -42,8 +42,8 @@ struct SearchView: View {
                                 .opacity(0.5)
                         }
                         VStack(alignment: .leading) {
-                            Text(user.nickname).font(.titleMedium)
-                            Text(user.bio ?? "").font(.titleMedium).foregroundStyle(Color.gray)
+                            Text(user.nickname).font(.titleSmall)
+                            Text(user.bio ?? "").font(.titleSmall).foregroundStyle(Color.gray)
                         }
                     }
                 }

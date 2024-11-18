@@ -21,7 +21,7 @@ struct ProfileView: View {
         NavigationStack {
             VStack {
                 Text(viewModel.nickname)
-                    .font(.title)
+                    .font(.createFont(weight: .regular, size: 28))
                     .frame(maxWidth: .infinity, alignment: .leading) // 내부 정렬
                     .padding(.horizontal)
                 HStack {
@@ -48,22 +48,22 @@ struct ProfileView: View {
                     }
                     VStack {
                         Text("\(viewModel.posts.count)")
-                            .font(.titleLarge)
+                            .font(.titleMedium)
                         Text("게시물")
                     }.frame(maxWidth: .infinity)
                     VStack {
                         Text("1")
-                            .font(.titleLarge)
+                            .font(.titleMedium)
                         Text("팔로워")
                     }.frame(maxWidth: .infinity)
                     VStack {
                         Text("1")
-                            . font(.titleLarge)
+                            . font(.titleMedium)
                         Text("팔로잉")
                     }.frame(maxWidth: .infinity)
                 }.padding()
                 Text(viewModel.name)
-                    .font(.titleMedium)
+                    .font(.titleSmall)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)
                     .padding(.bottom, 2 )

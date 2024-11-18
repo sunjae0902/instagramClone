@@ -64,7 +64,7 @@ struct ProfileEditingView: View {
             VStack(alignment: .leading, spacing: 5) {
                 Text("이름").foregroundStyle(.gray)
                     .font(.bodyLarge)
-                TextField("이름", text: $viewModel.name).font(.title2)
+                TextField("이름", text: $viewModel.name).font(.createFont(weight: .regular, size: 20))
                 Divider()
             }
             .padding(.horizontal)
@@ -73,7 +73,7 @@ struct ProfileEditingView: View {
             VStack(alignment: .leading, spacing: 5) {
                 Text("사용자 이름").foregroundStyle(.gray)
                     .font(.bodyLarge)
-                TextField("사용자 이름", text: $viewModel.nickname).font(.title2)
+                TextField("사용자 이름", text: $viewModel.nickname).font(.createFont(weight: .regular, size: 20))
                     .textInputAutocapitalization(.never)
                 Divider()
             }
@@ -83,7 +83,7 @@ struct ProfileEditingView: View {
             VStack(alignment: .leading, spacing: 5) {
                 Text("소개").foregroundStyle(.gray)
                     .font(.bodyLarge)
-                TextField("소개", text: $viewModel.bio).font(.title2)
+                TextField("소개", text: $viewModel.bio).font(.createFont(weight: .regular, size: 20))
                 Divider()
             }
             .padding(.horizontal)

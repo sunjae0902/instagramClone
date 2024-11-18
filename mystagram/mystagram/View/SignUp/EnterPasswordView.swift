@@ -14,7 +14,7 @@ struct EnterPasswordView: View {
         @Bindable var signUpViewModel = signUpViewModel
         SignupBackgroundView {
             VStack {
-                Text("비밀번호 만들기").font(.title).fontWeight(.semibold).frame(maxWidth: .infinity, alignment: .leading).padding(.bottom, 5).padding(.horizontal)
+                Text("비밀번호 만들기").font(.createFont(weight: .regular, size: 28)).fontWeight(.semibold).frame(maxWidth: .infinity, alignment: .leading).padding(.bottom, 5).padding(.horizontal)
                 
                 Text("다른 사람이 추측할 수 없는 6자 이상의 문자 또는 숫자로 비밀번호를 만드세요.").frame(maxWidth: .infinity, alignment: .leading).padding(.bottom, 10).padding(.horizontal)
                 

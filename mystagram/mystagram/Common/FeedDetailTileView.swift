@@ -27,7 +27,7 @@ struct FeedDetailTileView<Content: View>: View {
                     .padding(.trailing, -5)
             }
             Text(text)
-                .font(.titleMedium)
+                .font(.titleSmall)
         }
     }
 }

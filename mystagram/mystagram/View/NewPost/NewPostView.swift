@@ -42,7 +42,7 @@ struct NewPostView: View {
             }
             // (하위 뷰에서)@State 변수에 $를 넣어주면, 수정이 가능하다.
             // 커스텀 뷰에서는, @Binding을 사용해서 받는다.
-            TextField("문구를 작성하거나 설명을 추가하세요...", text: $viewModel.caption).font(.titleMedium).padding()
+            TextField("문구를 작성하거나 설명을 추가하세요...", text: $viewModel.caption).font(.titleSmall).padding()
             Spacer()
             Button {
                 Task{ // 비동기

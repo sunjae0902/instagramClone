@@ -26,7 +26,7 @@ struct SignUpView: View {
                             .stroke(Color.gray, lineWidth: 2).opacity(0.5).frame(width: 185, height: 185)
                     }
                 Text("\(signUpViewModel.nickname)님, Instagram에 오신 것을 환영합니다.")
-                    .font(.title).padding(.top, 20).padding(.horizontal)
+                    .font(.createFont(weight: .regular, size: 28)).padding(.top, 20).padding(.horizontal)
                 Spacer()
                 BlueButtonView {
                     Task {

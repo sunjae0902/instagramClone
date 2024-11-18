@@ -15,7 +15,7 @@ struct EnterNameView: View {
         @Bindable var signUpViewModel = signUpViewModel
         SignupBackgroundView {
             VStack {
-                Text("이름 입력").font(.title).fontWeight(.semibold).frame(maxWidth: .infinity, alignment: .leading).padding(.bottom, 10).padding(.horizontal)
+                Text("이름 입력").font(.createFont(weight: .regular, size: 28)).fontWeight(.semibold).frame(maxWidth: .infinity, alignment: .leading).padding(.bottom, 10).padding(.horizontal)
                 
                 TextField("성명", text: $signUpViewModel.name)
                     .modifier(SimpleTextFieldModifier())
