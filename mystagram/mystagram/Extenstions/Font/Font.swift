@@ -10,12 +10,12 @@ import SwiftUI
 extension Font {
     static let titleLarge = Font.custom("Pretendard-SemiBold", size: 18)
     static let titleMedium = Font.custom("Pretendard-SemiBold", size: 16)
-    static let titleSmall = Font.custom("Pretendard-Medium", size: 16)
+    static let titleSmall = Font.custom("Pretendard-Regular", size: 16)
     
     static let bodyLarge = Font.custom("Pretendard-SemiBold", size: 14)
     static let bodyMedium = Font.custom("Pretendard-SemiBold", size: 14)
-    static let bodySmall = Font.custom("Pretendard-Medium", size: 14)
-    static let bodyXsmall = Font.custom("Pretendard-Medium", size: 13)
+    static let bodySmall = Font.custom("Pretendard-Regular", size: 14)
+    static let bodyXsmall = Font.custom("Pretendard-Regular", size: 13)
     
     static let LabelLarge = Font.custom("Pretendard-SemiBold", size: 12)
     static let LabelMedium = Font.custom("Pretendard-Medium", size: 12)

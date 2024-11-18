@@ -10,6 +10,7 @@ import Kingfisher
 
 struct FeedCellView: View {
     @State var viewModel: FeedCellViewModel // init에서 초기화
+    @State var isCommentShowing = false
     
     init(post: Post) { // 데이터를 읽기만 할 경우, 모델을 직접 넘겨줌(뷰 모델 없어도 되지만 비즈니스 로직이 추가될 예정이므로 뷰 모델 사용하겠음)
         self.viewModel = FeedCellViewModel(post: post)
@@ -49,7 +50,7 @@ struct FeedCellView: View {
                     }
                     
                     Text("\(viewModel.post.user?.nickname ?? "")")
-                        .font(.titleLarge)
+                        .font(.titleMedium)
                     Spacer()
                     Image(systemName: "ellipsis")
                 }
@@ -70,11 +71,10 @@ struct FeedCellView: View {
                         isLike == true ? await viewModel.unlike() : await viewModel.like()
                     }
                 }).padding(.trailing, 5)
-                // 수정 
-                FeedDetailTileView(text: "12",
+                FeedDetailTileView(text: "\(viewModel.commentCount)",
                                    leadingIcon: {Image(systemName: "bubble.right")},
                                    action: {
-                    
+                    isCommentShowing = true
                 })
                 Spacer()
                 Image(systemName: "bookmark")
@@ -83,16 +83,20 @@ struct FeedCellView: View {
             .padding(.horizontal)
             .padding(.bottom, 1)
             Text("\(viewModel.post.user?.nickname ?? "")" + " " + viewModel.post.caption)
-                .font(.bodyLarge)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal)
-                .padding(.bottom, 1)
-            Text("댓글 25개 더보기")
-                .foregroundStyle(.gray)
                 .font(.bodySmall)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
                 .padding(.bottom, 1)
+            Button {
+                isCommentShowing = true
+            } label: {
+                Text("댓글 \(viewModel.commentCount)개 더보기")
+                    .foregroundStyle(.gray)
+                    .font(.bodySmall)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+                    .padding(.bottom, 1)
+            }
             Text(viewModel.post.date.relativeTimeString())
                 .foregroundStyle(.gray)
                 .font(.bodySmall)
@@ -100,6 +104,16 @@ struct FeedCellView: View {
                 .padding(.horizontal)
         }
         .padding(.bottom)
+        .onChange(of: isCommentShowing){ oldValue, newValue in
+            if newValue == true {
+                Task {
+                    await viewModel.loadCommentCount()
+                }
+            }
+        }
+        .sheet(isPresented: $isCommentShowing, content: {
+            CommentView(post: viewModel.post).presentationDragIndicator(.visible)
+        })
         .alert("오류", isPresented: $viewModel.isError) {
             Button("확인", role: .cancel) {}
         } message: {

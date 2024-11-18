@@ -108,7 +108,7 @@ struct ProfileView: View {
             }
             Divider()
                 .padding()
-            LazyVGrid(columns: columns) {
+            LazyVGrid(columns: columns, spacing: 2) {
                 ForEach (viewModel.posts) { post in // 각 행에 반복
                     let url = URL(string: post.imageUrl)
                     KFImage(url)

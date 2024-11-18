@@ -19,3 +19,7 @@ struct Post: Codable, Identifiable { // 인코딩/디코딩 가능, 반복문에
     
     var user: User?
 }
+
+extension Post {
+    static var DUMMY_POST = Post(id: UUID().uuidString, userId: UUID().uuidString, caption: "test caption", like: 0, imageUrl: "https://firebasestorage.googleapis.com:443/v0/b/mystagram-ae5c3.firebasestorage.app/o/images%2F0254D77D-14C6-4753-AD86-0DABCBEED66C?alt=media&token=fb3e49e2-2f29-4e81-bb88-e6072086d5f6", date: Date())
+}
