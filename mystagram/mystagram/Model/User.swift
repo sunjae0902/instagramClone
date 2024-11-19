@@ -16,6 +16,9 @@ struct User: Codable, Identifiable {
     var bio: String? // 자기소개
     var profileImageUrl: String?
     var isFollowing: Bool?
+    
+    var userCountInfo: UserCountInfo?
+    
     var isCurrentUser: Bool {
         guard let currentUserId = AuthManager.shared.currentUser?.id else { return false}
         return currentUserId == id

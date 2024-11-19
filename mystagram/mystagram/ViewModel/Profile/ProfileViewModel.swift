@@ -25,12 +25,26 @@ class ProfileViewModel {
     
     var posts: [Post] = []
     
+    var postCount: Int? {
+        user?.userCountInfo?.postCount
+    }
+    var followingCount: Int? {
+        user?.userCountInfo?.followingCount
+    }
+    var followerCount: Int? {
+        user?.userCountInfo?.followerCount
+    }
+   
     init() {
         let tempUser = AuthManager.shared.currentUser
         self.user = tempUser
         self.name = tempUser?.name ?? ""
         self.nickname = tempUser?.nickname ?? ""
         self.bio = tempUser?.bio ?? ""
+        
+        Task {
+            await loadUserCountInfo()
+        }
     }
     
     init(user: User) {
@@ -39,7 +53,10 @@ class ProfileViewModel {
         self.nickname = user.nickname
         self.bio = user.bio ?? ""
         
-        checkFollow()
+        Task {
+            await checkFollow()
+            await loadUserCountInfo()
+        }
     }
     
     // onChange 콜백
@@ -108,6 +125,7 @@ class ProfileViewModel {
             Task {
                 await AuthManager.shared.follow(userId: user?.id)
                 user?.isFollowing = true
+                await loadUserCountInfo()
             }
         }
         
@@ -115,13 +133,19 @@ class ProfileViewModel {
             Task {
                 await AuthManager.shared.unfollow(userId: user?.id)
                 user?.isFollowing = false
+                await loadUserCountInfo()
             }
         }
         
-        func checkFollow() {
+        func checkFollow() async {
             let userId = user?.id // 동시 접근으로 인한 오류 해결: 값을 복사해서 할당
-            Task {
-                self.user?.isFollowing = await AuthManager.shared.checkFollow(userId: userId)
-            }
+            self.user?.isFollowing = await AuthManager.shared.checkFollow(userId: userId)
         }
     }
+
+extension ProfileViewModel {
+    func loadUserCountInfo() async {
+        let userId = user?.id
+        self.user?.userCountInfo = await UserCountManager.loadUserCountInfo(userId: userId)
+    }
+}
