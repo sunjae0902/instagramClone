@@ -119,6 +119,11 @@ struct FeedCellView: View {
         } message: {
             Text("동작을 완료하지 못했어요.")
         }
+        .onAppear(perform: {
+            Task {
+                await viewModel.loadPostUser()
+            }
+        })
     }
 }
 

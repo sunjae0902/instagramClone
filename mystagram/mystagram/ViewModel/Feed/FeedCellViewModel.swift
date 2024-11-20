@@ -16,7 +16,7 @@ class FeedCellViewModel {
     init(post: Post){
         self.post = post
         Task {
-            self.post.user = await AuthManager().loadUserData(userId: post.userId)
+            await loadPostUser()
             await checkLike()
             await loadCommentCount()
         }
@@ -59,6 +59,9 @@ extension FeedCellViewModel {
 }
 
 extension FeedCellViewModel {
+    func loadPostUser() async {
+        self.post.user = await AuthManager().loadUserData(userId: post.userId)
+    }
     func loadCommentCount() async {
         self.commentCount = await CommentManager.loadCommentCount(postId: post.id)
     }

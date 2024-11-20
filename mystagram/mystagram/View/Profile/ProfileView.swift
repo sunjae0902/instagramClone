@@ -126,7 +126,6 @@ struct ProfileView: View {
         }
             .task {
                 await viewModel.loadUserCountInfo()
-                let _ = print("load")
             }
             .refreshable {
                 await viewModel.loadUserCountInfo()
