@@ -60,7 +60,7 @@ extension FeedCellViewModel {
 
 extension FeedCellViewModel {
     func loadPostUser() async {
-        self.post.user = await AuthManager().loadUserData(userId: post.userId)
+        self.post.user = await AuthManager.shared.loadUserData(userId: post.userId)
     }
     func loadCommentCount() async {
         self.commentCount = await CommentManager.loadCommentCount(postId: post.id)
