@@ -78,12 +78,13 @@ class AuthManager {
     }
     
     
-    func signIn(email: String, password: String) async {
+    func signIn(email: String, password: String) async throws {
         do {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             currentAuthUser = result.user
         } catch {
-            print("failed to log in with error \(error.localizedDescription)")
+            throw error
+//            print("failed to log in with error \(error.localizedDescription)")
         }
     }
     

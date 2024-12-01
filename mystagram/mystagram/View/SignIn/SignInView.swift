@@ -24,16 +24,23 @@ struct SignInView: View {
                     VStack(spacing: 20) {
                         TextField("이메일 주소", text: $viewModel.email)
                             .modifier(SimpleTextFieldModifier())
-                        
-                        SecureField("비밀번호", text: $viewModel.password)
-                            .modifier(SimpleTextFieldModifier())
-                        
+                        VStack(alignment: .leading){
+                            SecureField("비밀번호", text: $viewModel.password)
+                                .modifier(SimpleTextFieldModifier())
+                            if !viewModel.isLoginSuccess {
+                                Text("다시 시도해주세요").font(.bodySmall).foregroundStyle(.red).padding(.horizontal)
+                            }
+                        }
                         BlueButtonView {
                             Task {
                                 await viewModel.signIn()
                             }
                         } label: {
                             Text("로그인")
+
+                        }
+                        if viewModel.isLoading {
+                            CustomProgressView(text: "로그인 중...")
                         }
                         
                         Button {
